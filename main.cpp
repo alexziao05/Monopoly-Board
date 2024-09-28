@@ -10,6 +10,13 @@ public:
     int value;
     int rent;
 
+    MonopolyBoard() {
+        propertyName = "";
+        propertyColor = "";
+        value = 0;
+        rent = 0;
+    }
+
     MonopolyBoard(string propertyName, string propertyColor, int value, int rent) {
         /*Define overloaded constructor here*/
         this->propertyName = propertyName;
@@ -25,7 +32,7 @@ public:
 
     void print() {
         /*Define Print Here*/
-        cout << "(" << propertyName << ", " << propertyColor << ", " << value << ", " << rent << ")" << endl;
+        cout << "(" << propertyName << ", " << propertyColor << ", " << value << ", " << rent << ")";
     }
 };
 
@@ -36,8 +43,8 @@ public:
     T data;
     Node *nextNode;
 
-    Node (T value) {
-        data = value;
+    Node (T data) {
+        this->data = data;
         nextNode = nullptr;
     }
 };
@@ -86,8 +93,8 @@ public:
             while (current->nextNode != headNode) {
                 current = current->nextNode;
             }
-            newNode->nextNode = headNode;
             current->nextNode = newNode;
+            newNode->nextNode = headNode;
         }
     }
 
@@ -112,7 +119,19 @@ public:
     }
 
     void printList() {
-        cout << "Print List unwritten" << endl;
+        if (headNode == nullptr) {
+            cout << "List is empty" << endl;
+            return;
+        }
+
+        Node<T> *current = headNode;
+        do {
+            current->data.print();
+            cout << " -> ";
+            current = current->nextNode;
+        } while (current != headNode);
+
+        cout << "(return to head)" << endl;
     }
 
     //Optional Tasks
