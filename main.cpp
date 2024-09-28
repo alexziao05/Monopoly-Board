@@ -161,7 +161,11 @@ public:
     }
 
     void isListEmpty() {
-        cout << "Is List Empty unwritten" << endl;
+        if (headNode == nullptr) {
+            cout << "List is empty" << endl;
+        } else {
+            cout << "List is not empty" << endl;
+        }
     }
 
     void countNodes() {
