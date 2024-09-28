@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <stack>
 using namespace std;
 
 // Data class to store a string and an integer
@@ -137,7 +138,35 @@ public:
     //Optional Tasks
     //Level 1
     void reverseCLList() {
-        cout << "Reverse List unwritten" << endl;
+        if (headNode == nullptr || headNode->nextNode == headNode) {
+            return;
+        }
+
+        Node<T> *tailNode = headNode;
+        while (tailNode->nextNode != headNode) {
+            tailNode = tailNode->nextNode;
+        }
+        tailNode->nextNode = nullptr;
+
+        stack <Node<T>*> stack;
+        Node<T> *currNode = headNode;
+
+        while (currNode != nullptr) {
+            stack.push(currNode);
+            currNode = currNode->nextNode;
+        }
+
+        headNode = stack.top();
+        stack.pop();
+        Node<T> *prevNode = headNode;
+
+        while (!stack.empty()) {
+            prevNode->nextNode = stack.top();
+            prevNode = prevNode->nextNode;
+            stack.pop();
+        }
+
+        prevNode->nextNode = headNode;
     }
 
     void sortCLList() {
