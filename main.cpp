@@ -131,7 +131,25 @@ public:
     }
 
     void deleteAtHead() {
-        cout << "Delete at head unwritten" << endl;
+        if (headNode == nullptr) {
+            return;
+        }
+
+        if (headNode->nextNode == headNode) {
+            delete headNode;
+            headNode = nullptr;
+            return;
+        }
+
+        Node <T> *tailNode = headNode;
+        while (tailNode->nextNode != headNode) {
+            tailNode = tailNode->nextNode;
+        }
+
+        Node<T> *toDelete = headNode;
+        headNode = headNode->nextNode;
+        delete toDelete;
+        tailNode->nextNode = headNode;
     }
 
     void deleteAtTail() {
