@@ -169,7 +169,20 @@ public:
     }
 
     void countNodes() {
-        cout << "Count Nodes unwritten" << endl;
+        int counter = 1;
+
+        if (headNode == nullptr) {
+            cout << "Count nodes: 0" << endl;
+            return;
+        }
+
+        Node<T> *current = headNode;
+        do {
+            counter++;
+            current = current->nextNode;
+        } while (current->nextNode != headNode);
+
+        cout << "Count nodes: " << counter << endl;
     }
 
     //Optional Tasks
@@ -198,6 +211,7 @@ int main() {
     // Insert elements at the end
     list.insertAtHead(MonopolyBoard("Chase", "Blue", 1, 500));
     list.insertAtTail(MonopolyBoard("SoFi", "Yellow", 2, 1000));
+    list.insertAtTail(MonopolyBoard("Wells Fargo", "Red", 3, 750));
     list.insertAtPosition();
     list.deleteAtHead();
     list.deleteAtTail();
