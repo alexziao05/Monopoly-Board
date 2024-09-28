@@ -99,8 +99,35 @@ public:
         }
     }
 
-    void insertAtPosition() {
-        cout << "Insert at Position unwritten" << endl;
+    void insertAtPosition(T data, int position) {
+        insertNodeAtPosition(new Node<T>(data), position);
+    }
+
+    void insertNodeAtPosition(Node<T> *newNode, int position) {
+        int numberOfNodes = countNodes();
+
+        if (position > numberOfNodes + 1 || position < 1) {
+            cout << "Position out of bounds" << endl;
+            return;
+        }
+
+        if (position == 1) {
+            insertNodeAtHead(newNode);
+        } else if (position == numberOfNodes + 1) {
+            insertNodeAtTail(newNode);
+        } else {
+            int counter = 1;
+            Node<T> *prevNode = headNode;
+            while (counter < position - 1) {
+                prevNode = prevNode->nextNode;
+                counter++;
+            }
+
+            Node<T> *nextNode = prevNode->nextNode;
+            newNode->nextNode = nextNode;
+            prevNode->nextNode = newNode;
+        }
+
     }
 
     void deleteAtHead() {
@@ -197,12 +224,12 @@ public:
         }
     }
 
-    void countNodes() {
+    int countNodes() {
         int counter = 1;
 
         if (headNode == nullptr) {
             cout << "Count nodes: 0" << endl;
-            return;
+            return 0;
         }
 
         Node<T> *current = headNode;
@@ -212,6 +239,8 @@ public:
         } while (current->nextNode != headNode);
 
         cout << "Count nodes: " << counter << endl;
+
+        return counter;
     }
 
     //Optional Tasks
@@ -241,12 +270,12 @@ int main() {
     list.insertAtHead(MonopolyBoard("Chase", "Blue", 1, 500));
     list.insertAtTail(MonopolyBoard("SoFi", "Yellow", 2, 1000));
     list.insertAtTail(MonopolyBoard("Wells Fargo", "Red", 3, 750));
-    list.insertAtPosition();
+    list.insertAtPosition(MonopolyBoard("Bank Of America", "Purple", 4, 1500), 3);
     list.deleteAtHead();
     list.deleteAtTail();
     list.deleteAtPosition();
     //Optional Level 1 Tasks
-    list.reverseCLList();
+    // list.reverseCLList();
     list.sortCLList();
     list.printHeadNode();
     list.printLastNode();
