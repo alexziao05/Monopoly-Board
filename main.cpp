@@ -145,11 +145,19 @@ public:
     }
 
     void printHeadNode() {
-        cout << "Print Head Node unwritten" << endl;
+        cout << "Printing head node: ";
+        headNode->data.print();
+        cout << endl;
     }
 
     void printLastNode() {
-        cout << "Print Last Node unwritten" << endl;
+        Node<T> *current = headNode;
+        do {
+            current = current->nextNode;
+        } while (current->nextNode != headNode);
+        cout << "Printing last node: ";
+        current->data.print();
+        cout << endl;
     }
 
     void isListEmpty() {
