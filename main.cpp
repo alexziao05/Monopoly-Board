@@ -173,8 +173,31 @@ public:
         delete toDelete;
     }
 
-    void deleteAtPosition() {
-        cout << "Delete at Position unwritten" << endl;
+    void deleteAtPosition(int position) {
+        int numberOfNodes = countNodes();
+
+        if (numberOfNodes == 0) {
+            cout << "List is empty, there is nothing to delete" << endl;
+        } else if (position > numberOfNodes) {
+            cout << "Position out of bounds" << endl;
+        } else if (position == 1) {
+            deleteAtHead();
+        } else if (position == numberOfNodes) {
+            deleteAtTail();
+        } else {
+            int counter = 1;
+            Node<T> *prevNode = headNode;
+            while (counter < position - 1) {
+                prevNode = prevNode->nextNode;
+                counter++;
+            }
+            Node<T> *succNode = prevNode->nextNode->nextNode;
+            Node<T> *toDelete = prevNode->nextNode;
+            prevNode->nextNode = succNode;
+            delete toDelete;
+        }
+
+
     }
 
     void search(T value) {
@@ -306,9 +329,9 @@ int main() {
     list.insertAtTail(MonopolyBoard("SoFi", "Yellow", 2, 1000));
     list.insertAtTail(MonopolyBoard("Wells Fargo", "Red", 3, 750));
     list.insertAtPosition(MonopolyBoard("Bank Of America", "Purple", 4, 1500), 3);
-    list.deleteAtHead();
-    list.deleteAtTail();
-    list.deleteAtPosition();
+    //list.deleteAtHead();
+    //list.deleteAtTail();
+    list.deleteAtPosition(2);
     //Optional Level 1 Tasks
     //list.reverseCLList();
     list.sortCLList();
