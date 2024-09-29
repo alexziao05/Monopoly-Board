@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <stack>
-#include <algorithm>
+#include <cctype>
 using namespace std;
 
 // Data class to store a string and an integer
@@ -348,8 +348,28 @@ public:
         cout << "Node doesn't exist" << endl;
     }
 
-    void displaySpecificColorNode() {
-        cout << "Display Specific color Node" << endl;
+    void displaySpecificColorNode(string color) {
+
+        transform(color.begin(), color.end(), color.begin(), ::tolower);
+
+        if (headNode == nullptr) {
+            return;
+        }
+
+        Node<T> *current = headNode;
+
+        do {
+
+            string colorNode = current->data.propertyColor;
+            transform(colorNode.begin(), colorNode.end(), colorNode.begin(), ::tolower);
+
+            if (colorNode == color) {
+                cout << "Color " << color << ": " << current->data.propertyName << ", " << current->data.value << ", " << current->data.rent << endl;
+            }
+
+            current = current->nextNode;
+
+        }  while (current != headNode);
     }
 
     void mergeCLList() {
@@ -379,8 +399,8 @@ int main() {
     // list.countNodes();
     //Optional Level 2 Tasks
     //list.convertCLList();
-    list.updateNodeValue(MonopolyBoard("Chase", "Blue", 1, 500), MonopolyBoard("Chase", "Blue", 1, 10000));
-    list.displaySpecificColorNode();
+    //list.updateNodeValue(MonopolyBoard("Chase", "Blue", 1, 500), MonopolyBoard("Chase", "Blue", 1, 10000));
+    //list.displaySpecificColorNode("blue");
     list.mergeCLList();
     list.printList();
     return 0;
