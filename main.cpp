@@ -414,13 +414,13 @@ int main() {
     list.insertAtTail(MonopolyBoard("SoFi", "Yellow", 2, 1000));
     list.insertAtTail(MonopolyBoard("Wells Fargo", "Red", 3, 750));
     list.insertAtPosition(MonopolyBoard("Bank Of America", "Purple", 4, 1500), 3);
-    // list.deleteAtHead();
-    // list.deleteAtTail();
-    // list.deleteAtPosition(2);
+    //list.deleteAtHead();
+    //list.deleteAtTail();
+    //list.deleteAtPosition(2);
     // list.search(MonopolyBoard("Chase", "Blue", 1, 500));
     //Optional Level 1 Tasks
     // list.reverseCLList();
-    // list.sortCLList();
+    list.sortCLList();
     // list.printHeadNode();
     // list.printLastNode();
     // list.isListEmpty();
@@ -434,8 +434,8 @@ int main() {
     CircularLinkedList<MonopolyBoard> list2;
     list2.insertAtHead(MonopolyBoard("Debit", "Card", 1, 5000));
     list2.insertAtTail(MonopolyBoard("Credit", "Card", 2, 1000));
-
     /* End of New Circular List */
+
     list.mergeCLList(list2);
     list.printList();
     return 0;
