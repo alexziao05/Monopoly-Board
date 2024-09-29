@@ -1,4 +1,4 @@
-Project Title: Circular Singly Linked List - Monopoly Board
+Project Title: Circular Singly Linked List: Monopoly Board Implementation
 Author: Alex Huang
 
 Overview:
@@ -68,7 +68,7 @@ Best case: O(1)
 Worst case: O(N)
 
 9. Sort Circular Linked List
-Description: arranges nodes lexicographically based on propertyName
+Description: arranges nodes lexicographically based on propertyName, a field member of the Monopoly class
 Best case: O(NLogN)
 Worst case: O(NLogN)
 
@@ -78,7 +78,7 @@ Best case: O(1)
 Worst case: O(1)
 
 11. Print Last Node
-Description: prints the last node
+Description: prints the last node, where tail satisfy `tail->next == headNode`
 Best case: O(1)
 Worst case: O(N)
 
