@@ -372,8 +372,36 @@ public:
         }  while (current != headNode);
     }
 
-    void mergeCLList() {
-        cout << "Merge Circular Linked List Unwritten" << endl;
+    Node<T>* getHeadNode() {
+        return headNode;
+    }
+
+    void mergeCLList(CircularLinkedList otherList) {
+        Node<T> *thisHeadNode = this->headNode;
+        Node<T> *otherHeadNode = otherList.headNode;
+
+        if (thisHeadNode == nullptr) {
+            this->headNode = otherHeadNode;
+            return;
+        }
+
+        if (otherHeadNode == nullptr) {
+            return;
+        }
+
+        Node<T> *thisTailNode = thisHeadNode;
+        Node<T> *otherTailNode = otherHeadNode;
+
+        while(thisTailNode->nextNode != thisHeadNode) {
+            thisTailNode = thisTailNode->nextNode;
+        }
+
+        while(otherTailNode->nextNode != otherHeadNode) {
+            otherTailNode = otherTailNode->nextNode;
+        }
+
+        otherTailNode -> nextNode = thisHeadNode;
+        thisTailNode -> nextNode = otherHeadNode;
     }
 };
 
@@ -401,7 +429,14 @@ int main() {
     //list.convertCLList();
     //list.updateNodeValue(MonopolyBoard("Chase", "Blue", 1, 500), MonopolyBoard("Chase", "Blue", 1, 10000));
     //list.displaySpecificColorNode("blue");
-    list.mergeCLList();
+
+    /* New Circular List */
+    CircularLinkedList<MonopolyBoard> list2;
+    list2.insertAtHead(MonopolyBoard("Debit", "Card", 1, 5000));
+    list2.insertAtTail(MonopolyBoard("Credit", "Card", 2, 1000));
+
+    /* End of New Circular List */
+    list.mergeCLList(list2);
     list.printList();
     return 0;
 }
