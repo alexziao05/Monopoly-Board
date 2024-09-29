@@ -153,7 +153,24 @@ public:
     }
 
     void deleteAtTail() {
-        cout << "Delete at Tail unwritten" << endl;
+        if (headNode == nullptr) {
+            return;
+        }
+
+        if (headNode->nextNode == headNode) {
+            delete headNode;
+            headNode = nullptr;
+            return;
+        }
+
+        Node <T> *tailNode = headNode;
+        while (tailNode->nextNode->nextNode != headNode) {
+            tailNode = tailNode->nextNode;
+        }
+
+        Node<T> *toDelete = tailNode->nextNode;
+        tailNode->nextNode = headNode;
+        delete toDelete;
     }
 
     void deleteAtPosition() {
@@ -293,7 +310,7 @@ int main() {
     list.deleteAtTail();
     list.deleteAtPosition();
     //Optional Level 1 Tasks
-    // list.reverseCLList();
+    //list.reverseCLList();
     list.sortCLList();
     list.printHeadNode();
     list.printLastNode();
