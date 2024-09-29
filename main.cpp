@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <stack>
+#include <algorithm>
 using namespace std;
 
 // Data class to store a string and an integer
@@ -314,7 +315,16 @@ public:
     //Optional Tasks
     // Level2
     void convertCLList() {
-        cout << "Convert Circular List Unwritten." << endl;
+        if (headNode == nullptr) {
+            return;
+        }
+
+        Node <T> *tailNode = headNode;
+        while (tailNode->nextNode != headNode) {
+            tailNode = tailNode->nextNode;
+        }
+
+        tailNode->nextNode = nullptr;
     }
 
     void updateNodeValue() {
@@ -339,17 +349,17 @@ int main() {
     list.insertAtTail(MonopolyBoard("SoFi", "Yellow", 2, 1000));
     list.insertAtTail(MonopolyBoard("Wells Fargo", "Red", 3, 750));
     list.insertAtPosition(MonopolyBoard("Bank Of America", "Purple", 4, 1500), 3);
-    list.deleteAtHead();
-    list.deleteAtTail();
-    list.deleteAtPosition(2);
-    list.search(MonopolyBoard("Chase", "Blue", 1, 500));
+    // list.deleteAtHead();
+    // list.deleteAtTail();
+    // list.deleteAtPosition(2);
+    // list.search(MonopolyBoard("Chase", "Blue", 1, 500));
     //Optional Level 1 Tasks
-    list.reverseCLList();
-    list.sortCLList();
-    list.printHeadNode();
-    list.printLastNode();
-    list.isListEmpty();
-    list.countNodes();
+    // list.reverseCLList();
+    // list.sortCLList();
+    // list.printHeadNode();
+    // list.printLastNode();
+    // list.isListEmpty();
+    // list.countNodes();
     //Optional Level 2 Tasks
     list.convertCLList();
     list.updateNodeValue();
