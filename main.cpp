@@ -327,8 +327,25 @@ public:
         tailNode->nextNode = nullptr;
     }
 
-    void updateNodeValue() {
-        cout << "update Node value unwritten" << endl;
+    void updateNodeValue(T oldValue, T newValue) {
+        if (headNode == nullptr) {
+            cout << "List is empty" << endl;
+            return;
+        }
+
+        int counter = 1;
+        Node<T> *current = headNode;
+        do {
+            if(current->data.isEqual(oldValue)) {
+                deleteAtPosition(counter);
+                insertAtPosition(newValue, counter);
+                return;
+            }
+            current = current->nextNode;
+            counter++;
+        } while (current != headNode);
+
+        cout << "Node doesn't exist" << endl;
     }
 
     void displaySpecificColorNode() {
@@ -361,8 +378,8 @@ int main() {
     // list.isListEmpty();
     // list.countNodes();
     //Optional Level 2 Tasks
-    list.convertCLList();
-    list.updateNodeValue();
+    //list.convertCLList();
+    list.updateNodeValue(MonopolyBoard("Chase", "Blue", 1, 500), MonopolyBoard("Chase", "Blue", 1, 10000));
     list.displaySpecificColorNode();
     list.mergeCLList();
     list.printList();
