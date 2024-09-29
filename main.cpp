@@ -200,8 +200,18 @@ public:
 
     }
 
-    void search(T value) {
-        cout << "Search unwritten" << endl;
+    bool search(T value) {
+        Node<T> *current = headNode;
+        do {
+            if (current->data.isEqual(value)) {
+                cout << "Found element" <<  endl;
+                return true;
+            }
+            current = current->nextNode;
+        } while (current != headNode);
+
+        cout << "No such element" << endl;
+        return false;
     }
 
     void printList() {
@@ -329,11 +339,12 @@ int main() {
     list.insertAtTail(MonopolyBoard("SoFi", "Yellow", 2, 1000));
     list.insertAtTail(MonopolyBoard("Wells Fargo", "Red", 3, 750));
     list.insertAtPosition(MonopolyBoard("Bank Of America", "Purple", 4, 1500), 3);
-    //list.deleteAtHead();
-    //list.deleteAtTail();
+    list.deleteAtHead();
+    list.deleteAtTail();
     list.deleteAtPosition(2);
+    list.search(MonopolyBoard("Chase", "Blue", 1, 500));
     //Optional Level 1 Tasks
-    //list.reverseCLList();
+    list.reverseCLList();
     list.sortCLList();
     list.printHeadNode();
     list.printLastNode();
