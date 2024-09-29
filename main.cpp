@@ -265,8 +265,80 @@ public:
         prevNode->nextNode = headNode;
     }
 
+    /* Start of Merge Sort Implementation */
+
+    Node<T>* split(Node<T> *head) {
+        Node<T> *fast = head;
+        Node<T> *slow = head;
+
+        while (fast != nullptr && fast->nextNode != nullptr) { // Condition to check if reached the end of the list
+            fast = fast->nextNode->nextNode; // Moves twice as fast -- effectively splits list into two halves
+            if (fast != nullptr) { // Has not reached the end of the list
+                slow = slow->nextNode; // Room for slow to move forward
+            }
+        }
+
+        Node<T> *temp = slow->nextNode; // Forms the head of the second list
+        slow->nextNode = nullptr; // Terminates the first list
+        return temp; // Returns the head of the second list
+    }
+
+    Node<T>* merge (Node<T> *nodeA, Node<T> *nodeB) {
+        if (nodeA == nullptr) {
+            return nodeB;
+        }
+        if (nodeB == nullptr) {
+            return nodeA;
+        }
+
+        if (nodeA->data.propertyName < nodeB->data.propertyName) {
+            nodeA->nextNode = merge(nodeA->nextNode, nodeB);
+            return nodeA;
+        } else {
+            nodeB->nextNode = merge(nodeA, nodeB->nextNode);
+            return nodeB;
+        }
+    }
+
+    Node<T> *mergeSort(Node<T> *head) {
+        if (head == nullptr || head->nextNode == nullptr) {
+            return head;
+        }
+
+        Node<T> *second = split(head);
+        head = mergeSort(head);
+        second = mergeSort(second);
+
+        return merge(head, second);
+    }
+
+    Node<T> *getTail (Node<T> *head) {
+
+        if (head == nullptr) {
+            return nullptr;
+        }
+
+        while(head->nextNode != nullptr) {
+            head = head->nextNode;
+        }
+
+        return head;
+    }
+
+    /* End of Merge Sort Implementation */
+
     void sortCLList() {
-        cout << "Sort List unwritten" << endl;
+        convertCLList();
+
+        if (headNode == nullptr || headNode->nextNode == nullptr) {
+            return;
+        }
+
+        headNode = mergeSort(headNode);
+        Node<T> *tail = getTail(headNode);
+        if (tail != nullptr) {
+            tail->nextNode = headNode;
+        }
     }
 
     void printHeadNode() {
@@ -431,12 +503,12 @@ int main() {
     //list.displaySpecificColorNode("blue");
 
     /* New Circular List */
-    CircularLinkedList<MonopolyBoard> list2;
-    list2.insertAtHead(MonopolyBoard("Debit", "Card", 1, 5000));
-    list2.insertAtTail(MonopolyBoard("Credit", "Card", 2, 1000));
+    // CircularLinkedList<MonopolyBoard> list2;
+    // list2.insertAtHead(MonopolyBoard("Debit", "Card", 1, 5000));
+    // list2.insertAtTail(MonopolyBoard("Credit", "Card", 2, 1000));
     /* End of New Circular List */
 
-    list.mergeCLList(list2);
+    // list.mergeCLList(list2);
     list.printList();
     return 0;
 }
