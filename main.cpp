@@ -107,8 +107,8 @@ public:
     void insertNodeAtPosition(Node<T> *newNode, int position) {
         int numberOfNodes = countNodes();
 
+        // Check if position is legal.
         if (position > numberOfNodes + 1 || position < 1) {
-            cout << "Position out of bounds" << endl;
             return;
         }
 
@@ -178,9 +178,9 @@ public:
         int numberOfNodes = countNodes();
 
         if (numberOfNodes == 0) {
-            cout << "List is empty, there is nothing to delete" << endl;
+            return;
         } else if (position > numberOfNodes) {
-            cout << "Position out of bounds" << endl;
+            return;
         } else if (position == 1) {
             deleteAtHead();
         } else if (position == numberOfNodes) {
@@ -197,21 +197,26 @@ public:
             prevNode->nextNode = succNode;
             delete toDelete;
         }
-
-
     }
 
     bool search(T value) {
+        if (headNode == nullptr) {
+            return false;
+        }
+
         Node<T> *current = headNode;
+
         do {
             if (current->data.isEqual(value)) {
-                cout << "Found element" <<  endl;
+                cout << "Search: Found Element - PASSED" << endl;
                 return true;
             }
+
             current = current->nextNode;
+
         } while (current != headNode);
 
-        cout << "No such element" << endl;
+        cout << "Search: Didn't Find Element - FAILED" << endl;
         return false;
     }
 
@@ -243,6 +248,9 @@ public:
             tailNode = tailNode->nextNode;
         }
         tailNode->nextNode = nullptr;
+
+        // Push all elements of the LinkedList into the stack starting from head
+        // Popping it out effectively reverses the LinkedList
 
         stack <Node<T>*> stack;
         Node<T> *currNode = headNode;
@@ -328,6 +336,7 @@ public:
     /* End of Merge Sort Implementation */
 
     void sortCLList() {
+        // Convert to a regular linkedList
         convertCLList();
 
         if (headNode == nullptr || headNode->nextNode == nullptr) {
@@ -335,6 +344,8 @@ public:
         }
 
         headNode = mergeSort(headNode);
+
+        // Change regular linkedList back to circular LinkedList
         Node<T> *tail = getTail(headNode);
         if (tail != nullptr) {
             tail->nextNode = headNode;
@@ -357,19 +368,18 @@ public:
         cout << endl;
     }
 
-    void isListEmpty() {
+    bool isListEmpty() {
         if (headNode == nullptr) {
-            cout << "List is empty" << endl;
+            return true;
         } else {
-            cout << "List is not empty" << endl;
+            return false;
         }
     }
 
     int countNodes() {
-        int counter = 1;
+        int counter = 0;
 
         if (headNode == nullptr) {
-            cout << "Count nodes: 0" << endl;
             return 0;
         }
 
@@ -377,9 +387,7 @@ public:
         do {
             counter++;
             current = current->nextNode;
-        } while (current->nextNode != headNode);
-
-        cout << "Count nodes: " << counter << endl;
+        } while (current != headNode);
 
         return counter;
     }
@@ -387,6 +395,7 @@ public:
     //Optional Tasks
     // Level2
     void convertCLList() {
+        // Traverse to the end, find last node, and point it towards nullptr
         if (headNode == nullptr) {
             return;
         }
@@ -422,6 +431,7 @@ public:
 
     void displaySpecificColorNode(string color) {
 
+        // convert color to lowercase
         transform(color.begin(), color.end(), color.begin(), ::tolower);
 
         if (headNode == nullptr) {
@@ -433,6 +443,7 @@ public:
         do {
 
             string colorNode = current->data.propertyColor;
+            // convert node's color data to lowercase
             transform(colorNode.begin(), colorNode.end(), colorNode.begin(), ::tolower);
 
             if (colorNode == color) {
@@ -448,9 +459,19 @@ public:
         return headNode;
     }
 
+    Node<T>* getTailNode() {
+        Node<T> *current = headNode;
+        while (current->nextNode != headNode) {
+            current = current->nextNode;
+        }
+        return current;
+    }
+
     void mergeCLList(CircularLinkedList otherList) {
         Node<T> *thisHeadNode = this->headNode;
         Node<T> *otherHeadNode = otherList.headNode;
+
+        // Check if any list is empty
 
         if (thisHeadNode == nullptr) {
             this->headNode = otherHeadNode;
@@ -463,6 +484,9 @@ public:
 
         Node<T> *thisTailNode = thisHeadNode;
         Node<T> *otherTailNode = otherHeadNode;
+
+        // Point the tail to the other's list head
+        // Point other's list tail to head
 
         while(thisTailNode->nextNode != thisHeadNode) {
             thisTailNode = thisTailNode->nextNode;
@@ -477,38 +501,136 @@ public:
     }
 };
 
-// Main function to demonstrate the LinkedList class
-int main() {
-    // Create a LinkedList of Data objects
-    CircularLinkedList<MonopolyBoard> list;
-    // Insert elements at the end
-    list.insertAtHead(MonopolyBoard("Chase", "Blue", 1, 500));
-    list.insertAtTail(MonopolyBoard("SoFi", "Yellow", 2, 1000));
-    list.insertAtTail(MonopolyBoard("Wells Fargo", "Red", 3, 750));
-    list.insertAtPosition(MonopolyBoard("Bank Of America", "Purple", 4, 1500), 3);
-    //list.deleteAtHead();
-    //list.deleteAtTail();
-    //list.deleteAtPosition(2);
-    // list.search(MonopolyBoard("Chase", "Blue", 1, 500));
+void runUnitTests() {
+
+    MonopolyBoard BankOfAmerica = MonopolyBoard("BankOfAmerica", "Blue", 1, 500);
+    MonopolyBoard ChaseBank = MonopolyBoard("ChaseBank", "Yellow", 2, 1000);
+    MonopolyBoard WellsFargo = MonopolyBoard("WellsFargo", "Red", 3, 1500);
+    MonopolyBoard Citibank = MonopolyBoard("Citibank", "Green", 4, 2000);
+    MonopolyBoard GoldmanSachs = MonopolyBoard("GoldmanSachs", "Orange", 5, 2500);
+    MonopolyBoard HSBC = MonopolyBoard("HSBC", "Purple", 6, 3000);
+    MonopolyBoard PNC = MonopolyBoard("PNC", "Brown", 7, 3500);
+    MonopolyBoard TD = MonopolyBoard("TD", "LightBlue", 8, 4000);
+
+    CircularLinkedList<MonopolyBoard> banks;
+
+    banks.insertAtHead(ChaseBank);
+    if (banks.getHeadNode()->data.isEqual(ChaseBank)) {
+        cout << "Insert At Head: 1st Node - PASSED" << endl;
+    } else {
+        cout << "Insert At Head: 1st Node - FAILED" << endl;
+    }
+
+    banks.insertAtHead(WellsFargo);
+    if (banks.getHeadNode()->data.isEqual(WellsFargo)) {
+        cout << "Insert At Head: 2nd Node+ - PASSED" << endl;
+    } else {
+        cout << "Insert At Head: 2nd Node+ - FAILED" << endl;
+    }
+
+    CircularLinkedList<MonopolyBoard> banks_1;
+
+    banks_1.insertAtTail(BankOfAmerica);
+    if (banks_1.getTailNode()->data.isEqual(BankOfAmerica)) {
+        cout << "Insert At Tail: Empty List - PASSED" << endl;
+    } else {
+        cout << "Insert At Tail: Empty List - FAILED" << endl;
+    }
+
+    banks_1.insertAtTail(WellsFargo);
+    if (banks_1.getTailNode()->data.isEqual(WellsFargo)) {
+        cout << "Insert At Tail: Full List - PASSED" << endl;
+    } else {
+        cout << "Insert At Tail: Full List - FAILED" << endl;
+    }
+
+    CircularLinkedList<MonopolyBoard> banks_2;
+
+    banks_2.insertAtPosition(HSBC, 0);
+    if (banks_2.getHeadNode() == nullptr) {
+        cout << "Insert At Position: Invalid Position < 1 - PASSED" << endl;
+    } else {
+        cout << "Insert At Position: Invalid Position < 1 - FAILED" << endl;
+    }
+
+    banks_2.insertAtPosition(WellsFargo, 1);
+    banks_2.insertAtPosition(ChaseBank, 2);
+    banks_2.insertAtPosition(BankOfAmerica, 2);
+    if (banks_2.getHeadNode()->data.isEqual(WellsFargo) && banks_2.getTailNode()->data.isEqual(ChaseBank) && banks_2.search(BankOfAmerica) == true) {
+        cout << "Insert At Position: Middle Position - PASSED" << endl;
+    } else {
+        cout << "Insert At Position: Middle Position - FAILED" << endl;
+    }
+
+    banks_2.insertAtPosition(HSBC, 5);
+    if (banks_2.countNodes() == 3) {
+        cout << "Insert At Position: Invalid Position (n > length + 1) - PASSED" << endl;
+    } else {
+        cout << "Insert At Position: Invalid Position (n > length + 1) - FAILED" << endl;
+    }
+
+    banks_2.deleteAtHead();
+    if (banks_2.getHeadNode()->data.isEqual(BankOfAmerica)) {
+        cout << "Delete At Head: Full List - PASSED" << endl;
+    } else {
+        cout << "Delete At Head: Full List - FAILED" << endl;
+    }
+
+    banks_2.deleteAtTail();
+    if (banks_2.getTailNode()->data.isEqual(BankOfAmerica)) {
+        cout << "Delete At Tail: Full List - PASSED" << endl;
+    } else {
+        cout << "Delete At Tail: Full List - FAILED" << endl;
+    }
+
+    banks_1.deleteAtPosition(2);
+    if (banks_1.countNodes() == 1 && banks_1.getHeadNode()->data.isEqual(BankOfAmerica)) {
+        cout << "Delete At Position: PASSED" << endl;
+    } else {
+        cout << "Delete At Position: FAILED" << endl;
+    }
+
+    banks.search(ChaseBank);
+
     //Optional Level 1 Tasks
-    // list.reverseCLList();
-    list.sortCLList();
-    // list.printHeadNode();
-    // list.printLastNode();
-    // list.isListEmpty();
-    // list.countNodes();
+
+    banks.reverseCLList();
+    if (banks.getTailNode()->data.isEqual(WellsFargo) && banks.getHeadNode()->data.isEqual(ChaseBank)) {
+        cout << "Reverse List: PASSED" << endl;
+    } else {
+        cout << "Reverse List: FAILED" << endl;
+    }
+
+    //list.sortCLList();
+
+    banks.printLastNode();
+    banks.printHeadNode();
+    cout << "Printing list: ";
+    banks.printList();
+
+    banks_2.deleteAtHead();
+    if (banks_2.isListEmpty()) {
+        cout << "Is List Empty: Empty List - PASSED" << endl;
+    } else {
+        cout << "Is List Empty: Empty List - FAILED" << endl;
+    }
+
+    if (banks.countNodes() == 2) {
+        cout << "Count Nodes: PASSED" << endl;
+    } else {
+        cout << "Count Nodes: FAILED" << endl;
+    }
+
     //Optional Level 2 Tasks
     //list.convertCLList();
     //list.updateNodeValue(MonopolyBoard("Chase", "Blue", 1, 500), MonopolyBoard("Chase", "Blue", 1, 10000));
     //list.displaySpecificColorNode("blue");
-
-    /* New Circular List */
-    // CircularLinkedList<MonopolyBoard> list2;
-    // list2.insertAtHead(MonopolyBoard("Debit", "Card", 1, 5000));
-    // list2.insertAtTail(MonopolyBoard("Credit", "Card", 2, 1000));
-    /* End of New Circular List */
-
     // list.mergeCLList(list2);
-    list.printList();
+    //list.printList();
+}
+
+// Main function to demonstrate the LinkedList class
+int main() {
+    runUnitTests();
     return 0;
 }
