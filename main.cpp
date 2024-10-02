@@ -406,6 +406,7 @@ public:
         }
 
         tailNode->nextNode = nullptr;
+        cout << "Convert List: PASSED" << endl;
     }
 
     void updateNodeValue(T oldValue, T newValue) {
@@ -622,8 +623,16 @@ void runUnitTests() {
     }
 
     //Optional Level 2 Tasks
-    //list.convertCLList();
-    //list.updateNodeValue(MonopolyBoard("Chase", "Blue", 1, 500), MonopolyBoard("Chase", "Blue", 1, 10000));
+
+    banks.updateNodeValue(ChaseBank, HSBC);
+    if (banks.getHeadNode()->data.isEqual(HSBC)) {
+        cout << "Update Node Value: PASSED" << endl;
+    } else {
+        cout << "Update Node Value: FAILED" << endl;
+    }
+
+    banks.convertCLList();
+
     //list.displaySpecificColorNode("blue");
     // list.mergeCLList(list2);
     //list.printList();
