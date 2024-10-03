@@ -2,112 +2,63 @@ Project Title: Circular Singly Linked List: Monopoly Board Implementation
 Author: Alex Huang
 
 Overview:
-This project implements:
+This project implements several operations on a circular singly linked list, such as insertion, deletion, search, reversal, sorting, and merging. Each operation has varying time complexities depending on the case (best or worst).
 
-    1. Insertion
-        - At the beginning of the list
-        - At the end of the list
-        - At a specific position in the list
-    2. Deletion
-        - At the beginning of the list
-        - At the end of the list
-        - At a specific position in the list
-    3. Search - searches the list to find if a particular node exists in the list
-    4. Prints the list in the console
-    5. Reverse the list, such that a->b->c becomes c->b->a using a stack
-    6. Sorts the list with merge sort
-    7. Merges two circular linked list
-    8. Displays all nodes with a certain "Color" of space
-    9. Update a Node's value
+Language: C++
+IDE: CLion
 
-The data structure used to perform such operations is a Circular Singly Linked List.
-This program is written in C++ and can be executed from CLion.
+How to Run the Program in CLion:
+1. Install CLion.
+2. Open CLion and create a new C++ project.
+3. Include the libraries <iostream>, <stack>, <string>, and <cctype>.
+4. Build and run the project.
 
-How to Run the Code:
-Make sure CLion is installed. Libraries that were used in this program are iostream, stack, string, and cctype.
+Time Complexities of Operations (Best and Worst Case):
 
-Operations:
-1. Insert At Head
-Description: inserts a node at the beginning
+Insert At Head
 Best case: O(1)
+Explanation: Only requires updating the head pointer and the new node’s next to the current head. This takes constant time, regardless of the list size.
 Worst case: O(1)
+Explanation: No matter the list size, insertion at the head always takes constant time.
 
-2. Insert At Tail
-Description: inserts a node at the end
+Insert At Tail
 Best case: O(1)
+Explanation: If the list maintains a tail pointer, you can directly insert the node at the end without traversal, taking constant time.
 Worst case: O(N)
+Explanation: If there is no tail pointer, you need to traverse the list to find the last node, which takes O(N) in the worst case, where N is the number of nodes.
 
-3. Insert At Position
-Description: Given a position, algorithm checks to see if that position is legal. If so, a desired node will be inserted at that position.
+Insert At Position
 Best case: O(1)
+Explanation: If the position is the head (position 0), it’s equivalent to inserting at the head, which takes constant time.
 Worst case: O(N)
+Explanation: In the worst case, you have to traverse the entire list to insert at the last position or close to the end, which takes O(N).
 
-4. Delete At Head
-Description: deletes the node at the very beginning
+Delete At Head
 Best case: O(1)
+Explanation: Deleting the head node only requires updating the head pointer, which is done in constant time.
 Worst case: O(1)
+Explanation: As with the best case, deleting the head node is always O(1) since no traversal is required.
 
-5. Delete At Tail
-Description: deletes the node at the very end
+Delete At Tail
 Best case: O(1)
+Explanation: If a tail pointer is maintained, the deletion can be done in constant time by updating the tail pointer.
 Worst case: O(N)
+Explanation: Without a tail pointer, you need to traverse the list to update the second-to-last node's next pointer, which takes O(N).
 
-6. Delete At Position
-Description: deletes the node at a specific position
+Delete At Position
 Best case: O(1)
+Explanation: Deleting at position 0 (the head) is the best case, which is constant time.
 Worst case: O(N)
+Explanation: In the worst case, you have to traverse to the last position or near the end to perform the deletion, which takes O(N).
 
-7. Search
-Description: search to see if a particular node exists
+Search
 Best case: O(1)
+Explanation: If the node being searched for is at the head, the search completes in constant time.
 Worst case: O(N)
+Explanation: In the worst case, the node is at the last position or not present at all, requiring traversal of the entire list, which takes O(N).
 
-8. Reverse Circular Linked List
-Description: reverses the list from a->b->c to c->b->a
+Print List
 Best case: O(1)
+Explanation: In the best case, the list has only one node.
 Worst case: O(N)
-
-9. Sort Circular Linked List
-Description: arranges nodes lexicographically based on propertyName, a field member of the Monopoly class
-Best case: O(NLogN)
-Worst case: O(NLogN)
-
-10. Print Head Node
-Description: prints the first node
-Best case: O(1)
-Worst case: O(1)
-
-11. Print Last Node
-Description: prints the last node, where tail satisfy `tail->next == headNode`
-Best case: O(1)
-Worst case: O(N)
-
-12. Is List Empty
-Description: returns true if list is empty; otherwise, false
-Best case: O(1)
-Worst case: O(1)
-
-13. Count Nodes
-Description: returns the number of nodes in the list
-Best case: O(1)
-Worst case: O(N)
-
-14. Convert Circular Linked List
-Description: converts a circular linked list to a regular linked list, with `tail->next = nullptr`
-Best case: O(1)
-Worst case: O(N)
-
-15. Update Node Value
-Description: changes a specified node's data to something else
-Best case: O(1)
-Worst case: O(N)
-
-16. Display Specific Node Value
-Description: finds all node with a particular color and returns their properties
-Best case: O(1)
-Worst case: O(N)
-
-17. Merge Circular Linked List
-Description: merges two circular linked list into one circular linked list
-Best case: O(1)
-Worst case: O(N)
+Explanation: The worst case is that you need to traverse the entire list to print each node's value. In a circular list, you typically continue traversing until you return to the starting node, which again takes O(N) time.
