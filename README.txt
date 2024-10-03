@@ -10,7 +10,7 @@ IDE: CLion
 How to Run the Program in CLion:
 1. Install CLion.
 2. Open CLion and create a new C++ project.
-3. Include the libraries <iostream>, <stack>, <string>, and <cctype>.
+3. Include the libraries <iostream>, <stack>, <string>, <algorithm>, and <cctype>.
 4. Build and run the project.
 
 Time Complexities of Operations (Best and Worst Case):
